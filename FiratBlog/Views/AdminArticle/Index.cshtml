@@ -1,0 +1,97 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<FiratBlog.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    h2 {
+        color: white;
+        text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px blue;
+    }
+</style>
+
+<div class="text-center">
+    <br />
+    <h2>Makaleler</h2>
+</div>
+<br />
+<div><h4 class="alert-danger">@ViewBag.Basarisiz</h4></div>
+<nav>
+    <div>
+        @Html.ActionLink("Yeni Makale Ekle", "Create", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
+
+        <form method="post" action="/AdminArticle/Index" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0 float-right ">
+            <div class="input-group">
+                <input id="Search" name="Search" class="form-control" type="text" placeholder="Makale Başlığını Ara" aria-describedby="basic-addon2" required="" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>
+<br />
+<div class=" table-responsive form-group bg-white shadow-lg p-3 mb-5 bg-white rounded-lg ">
+
+    <table class="table table-bordered">
+
+        <tr class="cell-breakWord">
+            <th>Kategoeri Adı</th>
+            <th>Fotoğraf</th>
+            <th>Kullanıcı Adı</th>
+            <th>Başlık</th>
+            <th>İçerik</th>
+            <th>Tarih</th>
+            <th>Güncelle</th>
+            <th>Detaylar</th>
+            <th>Sil</th>
+
+        </tr>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        <img width="95" src="@item.Photo" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Member.UserName)
+                    </td>
+                    <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                            @Html.DisplayFor(modelItem => item.Contents)
+                        </span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Düzenle", "Edit", new { id = item.ArticleId }, new { @class = "btn btn-success" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detaylar", "Details", new { id = item.ArticleId }, new { @class = "btn btn-warning" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", new { id = item.ArticleId }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek istediğinizden emin misiniz ?')" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div style="text-align: center">
+        @Html.PagedListPager((IPagedList)Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)
+    </div>
+</div>

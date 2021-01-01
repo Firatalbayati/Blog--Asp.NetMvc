@@ -1,0 +1,99 @@
+﻿@model IEnumerable<FiratBlog.Models.Article>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>@ViewBag.Title - Fırat Blog</title>
+    <link href="/IndexAdmin/css/styles.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            background-color: rgba(236,240,241,1.00);
+        }
+
+        h2 {
+            color: white;
+            text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px blue;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="text-center">
+        <br />
+        <h2>Admin Özet</h2>
+    </div>
+    <div class="container-fluid">
+        <br />
+        <br />
+        <div class=" table-responsive form-group bg-white shadow-lg p-3 mb-5 bg-white rounded-lg ">
+            <div class="row">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body"><i class="fas fa-th-list fa-5x  "></i></div>
+                        <div class="card-body">Kategori Sayısı (@ViewBag.KategoriSayisi) </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="~/AdminCategory/Index">Detaylar</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-warning text-white mb-4">
+                        <div class="card-body"><i class="fas fa-th fa-5x  "></i></div>
+                        <div class="card-body">Makale Sayısı (@ViewBag.MakaleSayisi)</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="~/AdminArticle/Index">Detaylar</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body"><i class="fas fa-users fa-5x  "></i></div>
+                        <div class="card-body">Üye Sayısı (@ViewBag.UyeSayisi) </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="~/AdminMember/Index">Detaylar</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-danger text-white mb-4">
+                        <div class="card-body"><i class="far fa-comment-dots fa-5x  "></i></div>
+                        <div class="card-body">Yorum Sayısı (@ViewBag.YorumSayisi)</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="~/AdminComment/Index">Detaylar</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="/IndexAdmin/js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/IndexAdmin/assets/demo/chart-area-demo.js"></script>
+    <script src="/IndexAdmin/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="/IndexAdmin/assets/demo/datatables-demo.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,168 @@
+﻿@model  FiratBlog.Models.Article
+
+@{
+    ViewBag.Title = "ArticleDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .be-comment-text {
+        font-size: 13px;
+        line-height: 18px;
+        color: #7a8192;
+        display: block;
+        background: #f6f6f7;
+        border: 1px solid #edeff2;
+        padding: 15px 20px 20px 20px;
+    }
+
+    hr.new1 {
+        border: 0;
+        height: 3px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(9, 84, 132), rgba(0, 0, 0, 0));
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .cell-breakWord {
+        word-wrap: break-word;
+        max-width: 1px;
+    }
+</style>
+
+<body>
+    <div class="col-lg-8">
+        <br />
+        <article class="bg-white shadow p-3 mb-5 bg-white rounded-lg">
+            <div id="container">
+                <div>
+                    <img src="@Model.Member.Photo" class="rounded-circle" width="50" height="50" /> &nbsp; &nbsp; &nbsp;
+                    <i class="far fa-user" style=' color: #007bff;'></i> <a href="~/Member/MemberProfile/@Model.Member.MemberId">@Model.Member.NameSurname</a>&nbsp; &nbsp; &nbsp;
+                    <i class="far fa-edit" style=' color: #007bff;'></i> <a href="/Home/CategoryArticles/@Model.CategoryId">@Html.Raw(Model.Category.CategoryName) ... </a>&nbsp; &nbsp; &nbsp;
+                    <i class="far fa-calendar" style=' color: #007bff;'></i> @String.Format("{0: d MMMM yyyy}", Model.Date) &nbsp; &nbsp; &nbsp;
+                    <a href="https://facebook.com/sharer.php?u=https://localhost:58668/Home/Index/@Model.ArticleId"><i class="fab fa-facebook-f"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="https://facebook.com/sharer.php?u=https://localhost:58668/Home/Index/@Model.ArticleId"><i class="fab fa-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="https://facebook.com/sharer.php?u=https://localhost:58668/Home/Index/@Model.ArticleId"><i class="fab fa-linkedin-in"></i></a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <br />
+                </div>
+                <br />
+                <table>
+                    <tr>
+                        <td class="cell-breakWord">
+                            <img class="rounded mx-auto" src="@Model.Photo" style="width:100%" />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <hr class="new1" />
+            <div class="text-center">
+                <h1><a href="~/Home/ArticleDetails/@Html.DisplayFor(model => model.ArticleId)">@Html.DisplayFor(model => model.Title)</a></h1>
+            </div>
+            <br />
+
+            <table>
+                <tr>
+                    <td class="cell-breakWord">
+                        <div class=" text-center">
+                            <p>
+                                @Html.Raw(Model.Contents) ...
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </article>
+        <br />
+        <hr class="new1" />
+
+        @if (Session["memberid"] != null)
+        {
+            <div class="well bg-white shadow p-3 mb-5 bg-white rounded-lg ">
+                <div><h4 class="alert-danger">@ViewBag.Basarisiz</h4></div>
+                <h4>Yorum</h4>
+                <form role="form">
+                    <div class="form-group">
+                        <textarea id="comment" rows="7" cols="50" maxlength="199"></textarea>
+                    </div>
+                    <button type="submit" id="send" class="btn btn-primary">Yorum Yap</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <h4> <i class='far fa-comment' style=' color: #007bff;'></i>&nbsp; Yorum yapmak için lütfen kullanıcı girişi yapınız !</h4>
+            <br />
+            @Html.ActionLink("Giriş Yap", "Login", "Member", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
+        }
+        <br />
+        <br />
+        <br />
+        @foreach (var item in Model.Comment.ToList())
+        {
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" width="60" height="60" src="@item.Member.Photo" alt="@item.Member.NameSurname">
+                <div class="media-body">
+                    <div>
+                        <h5 class="mt-0">
+                            &nbsp; <i class="far fa-user" style=' color: #007bff;'></i> @item.Member.UserName &nbsp; <small><i class="far fa-calendar" style=' color: #007bff;'></i>@item.Date</small>&nbsp;
+
+                            @if (Convert.ToInt32(Session["memberid"]) == item.MemberId)
+                            {
+                                @Html.ActionLink("Sil", "DeleteComment", new { id = item.CommentId }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek istediğinizden emin misiniz ?')" })
+                            }
+                        </h5>
+
+                        <table>
+                            <tr>
+                                <td class="cell-breakWord">
+                                    <p class="be-comment-text">
+                                        @item.Contents
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        }
+        <br />
+    </div>
+</body>
+
+<script src="~/Content/js/jquery.js"></script>
+
+<script src="~/Content/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#send").click(function () {
+            var Yorumunuz = $("#comment").val();
+            $.ajax({
+                url: '/Home/SendComment/',
+                data: { comment: Yorumunuz, Articleid:@Model.ArticleId},
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    alert("Yorumunuz : " + Yorumunuz);}
+                });
+        });
+    })
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+            url: '/Home/ArticleRead/',
+            data: { Articleid: @Model.ArticleId},
+            type: 'POST',
+        });
+    })
+</script>

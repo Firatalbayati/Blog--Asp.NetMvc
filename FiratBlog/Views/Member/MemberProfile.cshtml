@@ -1,0 +1,59 @@
+﻿@model FiratBlog.Models.Member
+
+@{
+    ViewBag.Title = "MemberProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <div class="col-lg-8">
+        <br />
+        <h2>Üye Profili</h2>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                <img src="@Model.Photo" class="rounded-circle" width="180" height="180" alt="@Model.NameSurname" />
+            </dt>
+            <br />
+            <dt>Ad Soyad</dt>
+            <dd>
+                @Html.DisplayFor(model => model.NameSurname)
+            </dd>
+            <dt>Email</dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt>Yetki</dt>
+            <dd>
+                @Html.DisplayFor(model => model.Authority.Authority1)
+            </dd>
+        </dl>
+
+        <div class="form-group ">
+            <h4>Son Eklediği Makaleler</h4>
+            <br />
+            <table class="table table-bordered">
+                <tr>
+                    <th>Başlık</th>
+                    <th>Fotoğraf</th>
+                    <th>Tarih</th>
+                </tr>
+                <tbody>
+                    @foreach (var item in Model.Article.OrderByDescending(m => m.ArticleId).Take(5))
+                    {
+                        <tr>
+                            <td>
+                                <a href="/Home/ArticleDetails/@item.ArticleId">@item.Title</a>
+                            </td>
+                            <td>
+                                <img width="95" src="@item.Photo" />
+                            </td>
+                            <td>
+                                @item.Date
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>

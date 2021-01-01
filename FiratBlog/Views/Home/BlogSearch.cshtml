@@ -1,0 +1,53 @@
+﻿@model IEnumerable<FiratBlog.Models.Article>
+
+@{
+    ViewBag.Title = "BlogSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-8">
+    <br />
+    <h2>Arama sonuçu bulunan makaleler</h2>
+    <hr class="new1" />
+    <br />
+    <div class=" table-responsive form-group bg-white shadow p-3 mb-5 bg-white rounded-lg ">
+        <table class="table">
+            <tr>
+                <th>Kategori Adı</th>
+                <th>Yazar</th>
+                <th>Başlık</th>
+                <th>Fotoğraf</th>
+                <th>Tarih</th>
+                <th>Okunma Sayısı</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Member.NameSurname)
+                    </td>
+                    <td>
+                        <a href="/Home/ArticleDetails/@item.ArticleId"> @Html.DisplayFor(modelItem => item.Title)</a>
+                    </td>
+
+                    <td>
+                        <img class="img-rounded img-responsive" width="75" src="@item.Photo" alt="@item.Title" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Views)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

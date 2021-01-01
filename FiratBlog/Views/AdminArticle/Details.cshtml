@@ -1,0 +1,82 @@
+﻿@model FiratBlog.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    hr.new1 {
+        border: 0;
+        height: 3px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(9, 84, 132), rgba(0, 0, 0, 0));
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .cell-breakWord {
+        word-wrap: break-word;
+        max-width: 1px;
+    }
+</style>
+
+
+
+<body>
+    <br />
+    <article class="bg-white shadow p-3 mb-5 bg-white rounded-lg">
+        <div id="container">
+
+
+            <div class="text-center">
+                <img src="@Model.Member.Photo" class="rounded-circle" width="50" height="50" /> &nbsp; &nbsp; &nbsp;
+                <i class="far fa-user" style=' color: #007bff;'></i> <a href="~/Member/MemberProfile/@Model.Member.MemberId">@Model.Member.UserName</a>&nbsp; &nbsp; &nbsp;
+                <i class="far fa-comment-alt" style=' color: #007bff;'></i> <a href="~/Member/MemberProfile/@Model.Member.MemberId">@Model.Member.Email</a>&nbsp; &nbsp; &nbsp;
+                <i class="far fa-edit" style=' color: #007bff;'></i> <a href="/Home/CategoryArticles/@Model.CategoryId">@Html.Raw(Model.Category.CategoryName) ... </a>&nbsp; &nbsp; &nbsp;
+                <i class="far fa-calendar" style=' color: #007bff;'></i>@String.Format("{0: d MMMM yyyy}", @Model.Date) &nbsp; &nbsp; &nbsp;
+                <div class="text-center">
+                    <br />
+                    <br />
+
+                    <table>
+                        <tr>
+                            <td class="cell-breakWord">
+                                <img class="rounded mx-auto" src="@Model.Photo" style="width:100%" />
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <hr class="new1" />
+            </div>
+        </div>
+
+        <div class="text-center">
+            <h1><a href="~/Home/ArticleDetails/@Html.DisplayFor(model => model.ArticleId)">@Html.DisplayFor(model => model.Title)</a></h1>
+        </div>
+        <br />
+
+        <table>
+            <tr>
+                <td class="cell-breakWord">
+                    <p class="text-center">
+                        @Html.Raw(Model.Contents)
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+    </article>
+
+    <br />
+    <br />
+    <p>
+        @Html.ActionLink("Düzenle", "Edit", new { id = Model.ArticleId }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Geri Dön", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-warning", @role = "button" })
+    </p>
+
+</body>

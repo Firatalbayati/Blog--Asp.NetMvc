@@ -1,0 +1,29 @@
+﻿@model IEnumerable<FiratBlog.Models.Article>
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div><h4 class="alert-danger">@ViewBag.Basarisiz</h4></div>
+        @foreach (var item in Model)
+        {
+            if (item.Title.Length > 29)
+            {
+                <div>
+                    <a href="/Home/ArticleDetails/@item.ArticleId">@Html.Raw(item.Title.Substring(0, 29)) ...</a>(@item.Views)
+                </div>
+                <br />
+            }
+            else
+            {
+                <div>
+                    <a href="~/Home/ArticleDetails/@item.ArticleId">@Html.Raw(item.Title) </a>(@item.Views)
+                </div>
+                <br />
+            }
+        }
+    </div>
+</div>
+

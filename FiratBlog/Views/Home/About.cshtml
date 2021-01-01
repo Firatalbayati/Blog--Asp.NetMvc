@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .cell-breakWord {
+        word-wrap: break-word;
+        max-width: 1px;
+    }
+</style>
+
+
+<body>
+    <div class="col-lg-8">
+
+        <form class="bg-white shadow p-3 mb-5 bg-white rounded-lg">
+            <div class="text-center">
+                <h2>Hakkımızda</h2>
+                <hr class="new1" />
+            </div>
+            <br />
+
+            <table>
+                <tr>
+                    <td class="cell-breakWord">
+                        <img class="rounded mx-auto" src="~/Upload/About.JPG" style="width:100%" />
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+        </form>
+
+    </div>
+</body>
+

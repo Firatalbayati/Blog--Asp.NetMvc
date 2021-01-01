@@ -1,0 +1,40 @@
+﻿@model FiratBlog.Models.Contact
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<br />
+<h2>İletişim Detayları</h2>
+<div>
+
+    <hr class="new1" />
+    <br />
+    <dl class="dl-horizontal">
+
+        <dt>Ad Soyad</dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameSurname)
+        </dd>
+        <dt>Email</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>Konu</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+        <dt>Mesaj</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+    </dl>
+</div>
+<br />
+<p>
+    @Html.ActionLink("Geri Dön", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-warning", @role = "button" })
+</p>
+

@@ -1,0 +1,36 @@
+﻿@model FiratBlog.Models.Category
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<h2>Kategori Düzenle</h2>
+<div><h4 class="alert-danger">@ViewBag.Basarisiz</h4></div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr class="new1" />
+        <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CategoryId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryName, "Kategori Adı", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Güncelle" class="btn btn-primary" />
+                @Html.ActionLink("Geri Dön", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-warning", @role = "button" })
+            </div>
+        </div>
+    </div>
+}

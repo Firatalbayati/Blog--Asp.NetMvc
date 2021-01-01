@@ -1,0 +1,26 @@
+﻿@model FiratBlog.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<h2>Kategori Detayları</h2>
+<div>
+
+    <hr class="new1" />
+    <br />
+    <dl class="dl-horizontal">
+
+        <dt>Kategori Adı</dt>
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+    </dl>
+</div>
+<br />
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.CategoryId }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Geri Dön", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-warning", @role = "button" })
+</p>

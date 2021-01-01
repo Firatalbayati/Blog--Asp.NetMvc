@@ -1,0 +1,79 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<FiratBlog.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+    hr.new1 {
+        border: 0;
+        height: 3px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(9, 84, 132), rgba(0, 0, 0, 0));
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .cell-breakWord {
+        word-wrap: break-word;
+        max-width: 1px;
+    }
+</style>
+
+<div class="green col-md-8">
+    @foreach (var item in Model)
+    {
+        <article class="col-sm-12 bg-white shadow p-3 mb-5 bg-white rounded-lg">
+
+            <div>
+                <img src="@item.Member.Photo" class="rounded-circle" width="50" height="50" /> &nbsp; &nbsp; &nbsp;
+                <i class="far fa-user" style=' color: #007bff;'></i> <a href="~/Member/MemberProfile/@item.Member.MemberId">@item.Member.NameSurname</a>&nbsp; &nbsp; &nbsp;
+                <i class="far fa-edit" style=' color: #007bff;'></i> <a href="/Home/CategoryArticles/@item.CategoryId">@Html.Raw(item.Category.CategoryName) ... </a>&nbsp; &nbsp; &nbsp;
+                <i class="far fa-calendar" style=' color: #007bff;'></i> @String.Format("{0: d MMMM yyyy}", item.Date) &nbsp; &nbsp; &nbsp;
+                <a href="https://facebook.com/sharer.php?u=https://localhost:58668/Home/Index/@item.ArticleId"><i class="fab fa-facebook-f"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="https://facebook.com/sharer.php?u=https://localhost:58668/Home/Index/@item.ArticleId"><i class="fab fa-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="https://facebook.com/sharer.php?u=https://localhost:58668/Home/Index/@item.ArticleId"><i class="fab fa-linkedin-in"></i></a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+                <br />
+            </div>
+            <br />
+            <table>
+                <tr>
+                    <td class="cell-breakWord">
+                        <img class="rounded mx-auto" src="@item.Photo" style="width:100%" />
+                    </td>
+                </tr>
+            </table>
+            <h4 class="text-center"><a href="~/Home/ArticleDetails/@item.ArticleId">@item.Title</a></h4>
+            <table>
+                <tr>
+                    <td class="cell-breakWord">
+                        <div class=" text-center">
+                            @if (item.Contents.Length > 400)
+                            {
+                                <p>@Html.Raw(item.Contents.Substring(0, 400)) ... </p>
+                            }
+                            else
+                            {
+                                <p>@Html.Raw(item.Contents) ... </p>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <a href="~/Home/ArticleDetails/@item.ArticleId">Devamını Oku ...</a>
+            <br />
+            <hr class="new1" />
+        </article>
+    }
+
+    <div style="text-align: center">
+        @Html.PagedListPager((IPagedList)Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)
+    </div>
+</div>

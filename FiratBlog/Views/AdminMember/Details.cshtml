@@ -1,0 +1,49 @@
+﻿@model FiratBlog.Models.Member
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<br />
+<h2>Üye Profili</h2>
+<div>
+    <hr class="new1" />
+    <br />
+    <dl class="dl-horizontal">
+        <dt>
+            <img src="@Model.Photo" class="rounded-circle" width="180" height="180" alt="@Model.NameSurname" />
+        </dt>
+        <br />
+        <dt>Kullanıcı Adı</dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt>Ad Soyad</dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameSurname)
+        </dd>
+        <dt>Email</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>Şifre</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt>Yetki</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Authority.Authority1)
+        </dd>
+    </dl>
+    <br />
+    <p>
+        @Html.ActionLink("Düzenle", "Edit", new { id = Model.MemberId }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Geri Dön", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-warning", @role = "button" })
+    </p>
+</div>
+
+
+
+

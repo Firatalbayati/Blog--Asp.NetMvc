@@ -1,0 +1,36 @@
+﻿@model FiratBlog.Models.Member
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <div class="col-lg-8">
+        <br />
+        <h2>Kullanıcı Profili</h2>
+        <div><h4 class="alert-danger">@ViewBag.Basarisiz</h4></div>
+        <div>
+            <hr class="new1" />
+            <br />
+            <dl class="dl-horizontal">
+                <dt>
+                    <img src="@Model.Photo" class="rounded-circle" width="180" height="180" alt="@Model.NameSurname" />
+                </dt>
+                <br />
+                <dt>Kullanıcı Adı</dt>
+                <dd>@Html.DisplayFor(model => model.UserName)</dd>
+
+                <dt>Email</dt>
+                <dd>@Html.DisplayFor(model => model.Email)</dd>
+
+                <dt>Ad Soyad</dt>
+                <dd>@Html.DisplayFor(model => model.NameSurname)</dd>
+            </dl>
+            <br />
+            <div class="form-group">
+                @Html.ActionLink("Düzenle", "Edit", new { id = Model.MemberId }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Geri Dön", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "btn btn-warning", @role = "button" })
+            </div>
+        </div>
+    </div>
+</body>

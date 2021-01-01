@@ -1,0 +1,40 @@
+﻿@model FiratBlog.Models.Comment
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<br />
+<h2>Yorum Detayı</h2>
+
+<div>
+    <hr class="new1" />
+    <br />
+    <dl class="dl-horizontal">
+
+        <dt>Başlık</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Article.Title)
+        </dd>
+        <dt>Kullanıcı Adı</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Member.UserName)
+        </dd>
+        <dt>Yorum</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contents)
+        </dd>
+        <dt>Tarih</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+</div>
+<br />
+<p>
+    @Html.ActionLink("Geri Dön", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-warning", @role = "button" })
+</p>
+

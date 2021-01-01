@@ -1,0 +1,49 @@
+﻿@model FiratBlog.Models.Member
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <div class="col-lg-8">
+        <br />
+        <h2>Üye Giriş</h2>
+        <div><h4 class="alert-danger">@ViewBag.Basarisiz</h4></div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr class="new1" />
+                <br />
+                <h4 class="alert-danger">@ViewBag.HataErorr</h4>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", @required = "", @type = "Email" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, "Şifre", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Şifre", @required = "" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <h6><a href="~/Member/ForgotPassword">&nbsp; &nbsp; &nbsp;Şifremi Unuttum !</a></h6>
+                <br />
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Giriş" class="btn btn-primary" />
+                        @Html.ActionLink("Geri Dön", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "btn btn-warning", @role = "button" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>

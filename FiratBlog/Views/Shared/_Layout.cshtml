@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title - Fırat Blog</title>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+
+
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+
+
+    <script src="https://kit.fontawesome.com/9f03.js"></script>
+
+    <style>
+        body {
+            background-color: rgba(236,240,241,1.00);
+        }
+
+        hr.new1 {
+            border: 0;
+            height: 3px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(9, 84, 132), rgba(0, 0, 0, 0));
+        }
+
+        /*Up Button*/
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: royalblue;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+            #myBtn:hover {
+                background-color: lightgray;
+            }
+    </style>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <nav class="container">
+            <a class="navbar-brand" href="~/Home/Index">
+                <img src="~/Upload/FiratBloggg.jpg" width="190" height="56" class="d-inline-block align-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Home/Index">Anasayfa <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Home/CreateContact">İletişim <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Home/About">Hakkımızda <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+
+
+                <ul class="navbar-nav ml-auto ml-md-0">
+
+                    @if (Session["memberid"] != null)
+                    {
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style=' color: #007bff;'>@Session["username"].ToString() &nbsp;<i class="fas fa-user fa-fw" style=' color: #007bff;'></i></a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="~/Member/Index/@Session["memberid"]">@Session["username"].ToString()</a>
+                                @if (Convert.ToInt32(Session["authorityid"]) == 1)
+                                {
+                                    <a class="dropdown-item " href="~/AdminArticle/Index" target="_blank">Admin Paneli <span class="sr-only">(current)</span></a>
+                                }
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="~/Member/Logout">çıkış <span class="sr-only">(current)</span></a>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="~/Member/Login">Giriş <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="~/Member/Register/">Kayıt OL <span class="sr-only">(current)</span></a>
+                            </li>
+                        </ul>
+                    }
+                </ul>
+
+                <form method="post" action="/Home/BlogSearch" class="form-inline my-2 my-lg-0">
+                    <input id="Search" name="Search" class="form-control mr-sm-2" type="text" placeholder="Konu Başlığı Ara" required="">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Ara</button>
+                </form>
+
+
+            </div>
+        </nav>
+    </nav>
+
+
+    <div class="container">
+        <br />
+        <br />
+
+        <div class="row">
+
+            @RenderBody()
+
+
+            <div class=" red col-md-4">
+                <br />
+                <!-- CategoryPartial -->
+                <div>
+                    <h5>Kategorilerimiz</h5>
+                    <hr class="new1" />
+                    <div>
+                        @{
+                            Html.RenderAction("CategoryPartial", "Home");
+                        }
+                    </div>
+                </div>
+                <br />
+                <br />
+                <!-- PopularArticles -->
+                <div>
+                    <h5>En Çok Okunan Makaleler</h5>
+                    <hr class="new1" />
+                    <div">
+                        @{
+                            Html.RenderAction("PopularArticles", "Home");
+                        }
+                    </div">
+                </div>
+                <br />
+                <br />
+                <!-- lastComments -->
+                <div>
+                    <h5>Son 5 Yorumlar</h5>
+                    <hr class="new1" />
+                    <div>
+                        @{
+                            Html.RenderAction("lastComments", "Home");
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Footer -->
+    <footer>
+        <div class=" text-center py-4 bg-white">
+            <p class="text-primary">&copy; @DateTime.Now.Year - Fırat Albayatı</p>
+        </div>
+    </footer>
+
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="/IndexCss/vendor/jquery/jquery.min.js"></script>
+    <script src="/IndexCss/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        var mybutton = document.getElementById("myBtn");
+
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<FiratBlog.Models.Category>
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div><h4 class="alert-danger">@ViewBag.Basarisiz</h4></div>
+        @foreach (var item in Model)
+            {
+                if (item.CategoryName.Length > 29)
+                {
+                <div>
+                    <a href="/Home/CategoryArticles/@item.CategoryId">@Html.Raw(item.CategoryName.Substring(0, 29)) ... </a>(@item.Article.Count())
+                </div>
+                    <br />
+            }
+            else
+            {
+                <div>
+                    <a href="/Home/CategoryArticles/@item.CategoryId">@Html.Raw(item.CategoryName) </a>(@item.Article.Count())
+                </div>
+                    <br />
+            }
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryExplanation)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryExplanation)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.CategoryId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.CategoryId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.CategoryId })
+            </td>
+        </tr>
+    }
+
+    </table>*@
